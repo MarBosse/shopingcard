@@ -9,21 +9,21 @@ let totalPaid = 0; //global variable for tracking the remaining balance
    - productId: unique id for the product (number)
    - image: picture of product (url string)
 */
-let cherry = {
+const cherry = {
   name: "cherrys",
   price: 1,
   quantity: 0,
   productId: 1,
   image: "../images/cherry.jpg"
 }
-let orange = {
+const orange = {
   name: "oranges",
   price: 1.5,
   quantity: 0,
   productId: 2,
   image: "../images/orange.jpg"
 }
-let strawberry = {
+const strawberry = {
   name: "cherrys",
   price: 2,
   quantity: 0,
@@ -45,6 +45,10 @@ const cart = [];
   - addProductToCart should then increase the product's quantity
   - if the product is not already in the cart, add it to the cart
 */
+/**
+ * @description Adds a product to the cart based on the id 
+ * @param {number} id 
+ */
 function addProductToCart(id){
   const product = findProduct(id);
   product.quantity += 1;
@@ -53,8 +57,11 @@ function addProductToCart(id){
     cart.push(product);
   }
 }
-/*
- * Helper function to find a product based on the inserted Id
+
+/**
+ * @description Helper function to find a product based on the inserted Id
+ * @param {number} id 
+ * @returns 
  */
 function findProduct(id){
   return products.find(function(product){
@@ -68,6 +75,10 @@ function findProduct(id){
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
 */
+/**
+ * Increases the quantity of product based on the id 
+ * @param {number} id 
+ */
 function increaseQuantity(id){
   const product = findProduct(id);
   product.quantity += 1;
@@ -78,6 +89,11 @@ function increaseQuantity(id){
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
+/**
+ * Decreases the quantity of product based on the id
+ * Removes the product from the cart onces the quantity is zero
+ * @param {number} id 
+ */
 function decreaseQuantity(id){
   const product = findProduct(id);
   product.quantity -= 1;
@@ -92,6 +108,10 @@ function decreaseQuantity(id){
   - removeProductFromCart should update the product quantity to 0
   - removeProductFromCart should remove the product from the cart
 */
+/**
+ * @descpription Removes the product from the cart based on the Id
+ * @param {number} id 
+ */
 function removeProductFromCart(id){
   const product = findProduct(id);
   product.quantity = 0;
@@ -106,7 +126,10 @@ function removeProductFromCart(id){
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total of all products
   - cartTotal should return the sum of the products in the cart
-*/
+*/ /**
+ * 
+ * @returns the total amount to pay from the cart
+ */
 function cartTotal(){
   let sum = 0;
   for(let product of cart){
@@ -116,6 +139,9 @@ function cartTotal(){
 }
 
 /* Create a function called emptyCart that empties the products from the cart */
+/**
+ * @description Empties the cart
+ */
 function emptyCart(){
   cart.length = 0;
 }
@@ -123,6 +149,11 @@ function emptyCart(){
   - pay will return a negative number if there is a remaining balance
   - pay will return a positive number if money should be returned to customer
 */
+/**
+ * @description handles the pay process based on the amount which is submitted
+ * @param {number} amount 
+ * @returns the missing amount to pay or the cashback
+ */
 function pay(amount){
   totalPaid += amount;
   let balance = totalPaid - cartTotal();
