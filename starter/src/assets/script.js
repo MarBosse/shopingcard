@@ -46,15 +46,21 @@ const cart = [];
   - if the product is not already in the cart, add it to the cart
 */
 function addProductToCart(id){
-  const product = products.find(function(product){
-    if(product.productId === id){
-      return product;
-    }
-  });
+  const product = findProduct(id);
   product.quantity += 1;
   if(!cart.some((product)=> product.productId === id)){
     cart.push(product);
   }
+}
+/*
+ * Helper function to find a product based on the inserted Id
+ */
+function findProduct(id){
+  return products.find(function(product){
+    if(product.productId === id){
+      return product;
+    }
+  });
 }
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
@@ -62,11 +68,7 @@ function addProductToCart(id){
   - increaseQuantity should then increase the product's quantity
 */
 function increaseQuantity(id){
-  const product = products.find(function(product){
-    if(product.productId === id){
-      return product;
-    }
-  });
+  const product = findProduct(id);
   product.quantity += 1;
 }
 
@@ -76,11 +78,7 @@ function increaseQuantity(id){
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
 function decreaseQuantity(id){
-  const product = products.find(function(product){
-    if(product.productId === id){
-      return product;
-    }
-  });
+  const product = findProduct(id);
   product.quantity -= 1;
   if(product.quantity === 0){
     removeProductFromCart(id);
@@ -93,11 +91,7 @@ function decreaseQuantity(id){
   - removeProductFromCart should remove the product from the cart
 */
 function removeProductFromCart(id){
-  const product = products.find(function(product){
-    if(product.productId === id){
-      return product;
-    }
-  });
+  const product = findProduct(id);
   product.quantity = 0;
 
   const productIndex = cart.findIndex((product) => {
@@ -128,7 +122,11 @@ function emptyCart(){
 */
 function pay(amount){
   totalPaid += amount;
-  return totalPaid - cartTotal();
+  let balance = totalPaid - cartTotal();
+  if(totalPaid > cartTotal()){
+    totalPaid = 0;
+  }
+    return balance;
 }
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
