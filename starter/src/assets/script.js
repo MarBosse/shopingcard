@@ -1,6 +1,6 @@
 /* Create an array named products which you will use to add all of your product object literals that you create in the next step. */
 const products = [];
-let totalPaid = 0;
+let totalPaid = 0; //global variable for tracking the remaining balance
 /* Create 3 or more product objects using object literal notation 
    Each product should include five properties
    - name: name of product (string)
@@ -48,6 +48,7 @@ const cart = [];
 function addProductToCart(id){
   const product = findProduct(id);
   product.quantity += 1;
+  //checks if the product is in the cart, if not -> adding it 
   if(!cart.some((product)=> product.productId === id)){
     cart.push(product);
   }
@@ -80,6 +81,7 @@ function increaseQuantity(id){
 function decreaseQuantity(id){
   const product = findProduct(id);
   product.quantity -= 1;
+  //removes product from the cart onces the quantity is zero
   if(product.quantity === 0){
     removeProductFromCart(id);
   }
@@ -94,6 +96,7 @@ function removeProductFromCart(id){
   const product = findProduct(id);
   product.quantity = 0;
 
+  //finding the index of the product in cart array to delete it afterwords
   const productIndex = cart.findIndex((product) => {
     return product.productId === id;
   });
@@ -123,6 +126,7 @@ function emptyCart(){
 function pay(amount){
   totalPaid += amount;
   let balance = totalPaid - cartTotal();
+  //resets the totalPaid amount onces everything is paid
   if(totalPaid > cartTotal()){
     totalPaid = 0;
   }
